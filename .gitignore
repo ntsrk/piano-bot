@@ -2,7 +2,8 @@
 /alt
 /send_midi_data/__pycache__
 /send_midi_data/midi_files
-/send_midi_data/code_dump.txt
+/send_midi_data/documentation.txt
+/send_midi_data/tutorial_mido.py
 
 # Don't keep backup files
 *.swp

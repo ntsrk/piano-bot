@@ -2,7 +2,7 @@ import mido # https://github.com/mido/mido
 import time
 import serial
 import sys
-from functions import play_function, debug_repeat, debug_faster, debug_slower, play_one_channel
+from functions import *
 
 # Configure serial connection
 ser = serial.Serial(
@@ -20,7 +20,7 @@ if not ser.is_open:
 
 time.sleep(2) # benötigt etwas Zeit die Verbindung aufzubauen -> sonst verpasst der Arduino die ersten paar Bytes
 
-play_function(mido.MidiFile(sys.argv[1]), ser)
+play_midi_file(mido.MidiFile(sys.argv[1]), ser)
 
 time.sleep(1) # nicht unbedingt nötig denke ich, aber schön wenn der nicht instant den Port schließt nach dem letzten Byte finde ich
 
