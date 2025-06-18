@@ -1,13 +1,44 @@
 import mido # https://github.com/mido/mido
 import time
 
-def play_midi_file(midi_file, ser):
-    for msg in midi_file.play():
-        data = msg.bytes() # [144=status_byte->type of message and channel, 81=data_byte1->note, 52=data_byte2->velocity]    
-        ser.write(data) # Send the bytes to the serial port
-        # zum debuggen
-        # print(msg)
-        print(data)
+###############################
+### functions for debugging ###
+###############################
+def play_notes_from_a_to_b(sleeptime, a, b, velocity, ser):
+    while a<=b:
+        note = a
+        midi_msg_on = mido.Message('note_on', channel=0, note=note, velocity=velocity)
+        midi_msg_off = mido.Message('note_on', channel=0, note=note, velocity=0)
+        ser.write(midi_msg_on.bytes())
+        print(midi_msg_on.bytes())
+        time.sleep(sleeptime)
+        ser.write(midi_msg_off.bytes())
+        print(midi_msg_off.bytes())
+        time.sleep(sleeptime)
+        a = a + 1
+
+def play_notes_from_b_to_a(sleeptime, a, b, velocity, ser):
+    while b>=a:
+        note = b
+        midi_msg_on = mido.Message('note_on', channel=0, note=note, velocity=velocity)
+        midi_msg_off = mido.Message('note_on', channel=0, note=note, velocity=0)
+        ser.write(midi_msg_on.bytes())
+        print(midi_msg_on.bytes())
+        time.sleep(sleeptime)
+        ser.write(midi_msg_off.bytes())
+        print(midi_msg_off.bytes())
+        time.sleep(sleeptime)
+        b = b - 1
+
+def play_note(sleeptime, note, velocity, ser):
+    midi_msg_on = mido.Message('note_on', channel=0, note=note, velocity=velocity)
+    midi_msg_off = mido.Message('note_on', channel=0, note=note, velocity=0)
+    ser.write(midi_msg_on.bytes())
+    print(midi_msg_on.bytes())
+    time.sleep(sleeptime)
+    ser.write(midi_msg_off.bytes())
+    print(midi_msg_off.bytes())
+    time.sleep(sleeptime)
 
 def play_repeating_note(repeat, sleeptime, note, velocity, ser):
     # Debug send only one key
@@ -46,6 +77,17 @@ def play_repeating_note_getting_slower(startsleeptime, stopsleeptime, change, no
         print(midi_msg_off.bytes())
         time.sleep(startsleeptime)
         startsleeptime += change
+
+################################
+### functions for actual use ###
+################################
+def play_midi_file(midi_file, ser):
+    for msg in midi_file.play():
+        data = msg.bytes() # [144=status_byte->type of message and channel, 81=data_byte1->note, 52=data_byte2->velocity]    
+        ser.write(data) # Send the bytes to the serial port
+        # zum debuggen
+        # print(msg)
+        print(data)
 
 # beispielsweise um nur die linke oder rechte Hand zu spielen
 def play_midi_file_one_channel(midi_file, channel, ser):

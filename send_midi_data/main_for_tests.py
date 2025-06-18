@@ -20,15 +20,69 @@ if not ser.is_open:
 
 time.sleep(2) # benötigt etwas Zeit die Verbindung aufzubauen -> sonst verpasst der Arduino die ersten paar Bytes
 
-play_repeating_note(repeat=5, sleeptime=1, note=101, velocity=80, ser=ser)
+# play_repeating_note(repeat=5, sleeptime=1, note=101, velocity=80, ser=ser)
+
+# play_repeating_note(repeat=10, sleeptime=0.05, note=101, velocity=80, ser=ser)
+# play_repeating_note(repeat=10, sleeptime=0.1, note=101, velocity=80, ser=ser)
+# play_repeating_note(repeat=10, sleeptime=0.2, note=101, velocity=80, ser=ser)
+# play_repeating_note(repeat=10, sleeptime=0.4, note=101, velocity=80, ser=ser)
+
+# play_repeating_note(repeat=1, sleeptime=1, note=101, velocity=80, ser=ser)
+# play_repeating_note(repeat=10, sleeptime=0.25, note=101, velocity=80, ser=ser)
+
+
+# midi_msg_on1 = mido.Message('note_on', channel=0, note=21, velocity=80)
+# midi_msg_on2 = mido.Message('note_on', channel=0, note=22, velocity=80)
+# midi_msg_on3 = mido.Message('note_on', channel=0, note=23, velocity=80)
+# midi_msg_off1 = mido.Message('note_on', channel=0, note=21, velocity=0)
+# midi_msg_off2 = mido.Message('note_on', channel=0, note=22, velocity=0)
+# midi_msg_off3 = mido.Message('note_on', channel=0, note=23, velocity=0)
+
+# for i in range(10): 
+#     ser.write(midi_msg_on1.bytes())
+#     ser.write(midi_msg_on2.bytes())
+#     ser.write(midi_msg_on3.bytes())
+#     time.sleep(0.5)
+#     ser.write(midi_msg_off1.bytes())
+#     ser.write(midi_msg_off2.bytes())
+#     ser.write(midi_msg_off3.bytes())
+#     time.sleep(0.5)
+
+# play_repeating_note(repeat=10, sleeptime=0.25, note=21, velocity=80, ser=ser)
+# play_repeating_note(repeat=10, sleeptime=0.25, note=22, velocity=80, ser=ser)
+# play_repeating_note(repeat=10, sleeptime=0.25, note=23, velocity=80, ser=ser)
 # play_repeating_note(repeat=1, sleeptime=1, note=101, velocity=80, ser=ser)
 
-# play_repeating_note_getting_faster(startsleeptime=1, stopsleeptime=0.2, change=0.2, note=101, velocity=80, ser=ser)
+# play_notes_from_a_to_b(sleeptime=1, a=27, b=36, velocity=80, ser=ser)
+# play_notes_from_a_to_b(sleeptime=0.5, a=27, b=36, velocity=80, ser=ser)
+# play_notes_from_a_to_b(sleeptime=0.25, a=27, b=36, velocity=80, ser=ser)
+# play_notes_from_a_to_b(sleeptime=1, a=27, b=36, velocity=80, ser=ser)
+# play_notes_from_b_to_a(sleeptime=1, a=27, b=36, velocity=80, ser=ser)
+# play_notes_from_a_to_b(sleeptime=0.125, a=27, b=36, velocity=80, ser=ser)
+# play_notes_from_b_to_a(sleeptime=0.125, a=27, b=36, velocity=80, ser=ser)
+# play_notes_from_a_to_b(sleeptime=0.0625, a=27, b=36, velocity=80, ser=ser)
+# play_notes_from_b_to_a(sleeptime=0.0625, a=27, b=36, velocity=80, ser=ser)
+# play_notes_from_a_to_b(sleeptime=0.03125, a=27, b=36, velocity=80, ser=ser)
+# play_notes_from_b_to_a(sleeptime=0.03125, a=27, b=36, velocity=80, ser=ser)
+# play_notes_from_a_to_b(sleeptime=0.015625, a=27, b=36, velocity=80, ser=ser)
+# play_notes_from_b_to_a(sleeptime=0.015625, a=27, b=36, velocity=80, ser=ser)
+# play_notes_from_a_to_b(sleeptime=0.03125, a=27, b=36, velocity=80, ser=ser)
+# play_notes_from_b_to_a(sleeptime=0.03125, a=27, b=36, velocity=80, ser=ser)
+# play_notes_from_a_to_b(sleeptime=0.015625, a=27, b=36, velocity=80, ser=ser)
+# play_notes_from_b_to_a(sleeptime=0.015625, a=27, b=36, velocity=80, ser=ser)
+# play_notes_from_a_to_b(sleeptime=0.01, a=27, b=36, velocity=80, ser=ser)
+# play_notes_from_b_to_a(sleeptime=0.01, a=27, b=36, velocity=80, ser=ser)
+# play_notes_from_a_to_b(sleeptime=0.01, a=27, b=36, velocity=80, ser=ser)
+# play_notes_from_b_to_a(sleeptime=0.01, a=27, b=36, velocity=80, ser=ser)
 
+# play_repeating_note_getting_faster(startsleeptime=1, stopsleeptime=0.2, change=0.2, note=101, velocity=80, ser=ser)
 # play_repeating_note_getting_slower(startsleeptime=0.2, stopsleeptime=1, change=0.2, note=101, velocity=80, ser=ser)
 
-midi_file = mido.MidiFile('send_midi_data/midi_files/Test_Klavier.mid')
+# midi_file = mido.MidiFile('piano_robot_project_software/send_midi_data/midi_files/Test_Klavier.mid')
 # midi_file = mido.MidiFile('send_midi_data/midi_files/Hungarian Rhapsody No. 2 - Franz Liszt [MIDICollection.net].mid')
+
+
+# play_repeating_note_getting_faster(startsleeptime=0.25, stopsleeptime=0.05, note=27, velocity=80, ser=ser, change=0.05)
 
 # play_midi_file(midi_file, ser) # Open the MIDI file as static for tests
 

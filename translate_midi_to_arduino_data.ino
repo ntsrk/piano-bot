@@ -4,12 +4,12 @@
 
 // define addresses for pwm boards
 // middle C (60 / 40 / C4)=(midi note number / key Number / name of key)
-Adafruit_PWMServoDriver pwmBoard5 = Adafruit_PWMServoDriver(0x45); // Key Number 1 to 16 / Midi Note Number 21 to 36 / Key Name A0 to C2
-Adafruit_PWMServoDriver pwmBoard4 = Adafruit_PWMServoDriver(0x44); // Key Number 17 to 32 / Midi Note Number 37 to 52 / Key Name C#2 to E3
-Adafruit_PWMServoDriver pwmBoard3 = Adafruit_PWMServoDriver(0x43); // Key Number 33 to 48 / Midi Note Number 53 to 68 / Key Name F3 to G#4
-Adafruit_PWMServoDriver pwmBoard2 = Adafruit_PWMServoDriver(0x42); // Key Number 49 to 64 / Midi Note Number 69 to 84 / Key Name A4 to C6
-Adafruit_PWMServoDriver pwmBoard1 = Adafruit_PWMServoDriver(0x41); // Key Number 65 to 80 / Midi Note Number 85 to 100 / Key Name C#6 to E7
-Adafruit_PWMServoDriver pwmBoard0 = Adafruit_PWMServoDriver(0x40); // Key Number 81 to 88 / Midi Note Number 101 to 108 / Key Name F7 to C8
+Adafruit_PWMServoDriver pwmBoard5 = Adafruit_PWMServoDriver(0x45); // Key Number 1 to 16 / Midi Note Number 21 to 36 / Key Name A0 to C2 / I2C Bus 000 101
+Adafruit_PWMServoDriver pwmBoard4 = Adafruit_PWMServoDriver(0x44); // Key Number 17 to 32 / Midi Note Number 37 to 52 / Key Name C#2 to E3 / I2C Bus 000 100
+Adafruit_PWMServoDriver pwmBoard3 = Adafruit_PWMServoDriver(0x43); // Key Number 33 to 48 / Midi Note Number 53 to 68 / Key Name F3 to G#4 / I2C Bus 000 011
+Adafruit_PWMServoDriver pwmBoard2 = Adafruit_PWMServoDriver(0x42); // Key Number 49 to 64 / Midi Note Number 69 to 84 / Key Name A4 to C6 / I2C Bus 000 010
+Adafruit_PWMServoDriver pwmBoard1 = Adafruit_PWMServoDriver(0x41); // Key Number 65 to 80 / Midi Note Number 85 to 100 / Key Name C#6 to E7 / I2C Bus 000 001
+Adafruit_PWMServoDriver pwmBoard0 = Adafruit_PWMServoDriver(0x40); // Key Number 81 to 88 / Midi Note Number 101 to 108 / Key Name F7 to C8 / I2C Bus 000 000
 
 // define constants and variables
 const byte INTERVAL_BETWEEN_NOTES = 25; // in ms (25ms works best at the moment)
