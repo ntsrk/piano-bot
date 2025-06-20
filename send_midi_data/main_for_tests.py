@@ -48,14 +48,72 @@ time.sleep(2) # benötigt etwas Zeit die Verbindung aufzubauen -> sonst verpasst
 #     ser.write(midi_msg_off3.bytes())
 #     time.sleep(0.5)
 
-# play_repeating_note(repeat=10, sleeptime=0.25, note=21, velocity=80, ser=ser)
+play_repeating_note(repeat=10, sleeptime=0.25, note=21, velocity=80, ser=ser)
 # play_repeating_note(repeat=10, sleeptime=0.25, note=22, velocity=80, ser=ser)
 # play_repeating_note(repeat=10, sleeptime=0.25, note=23, velocity=80, ser=ser)
 # play_repeating_note(repeat=1, sleeptime=1, note=101, velocity=80, ser=ser)
 
-# play_notes_from_a_to_b(sleeptime=1, a=27, b=36, velocity=80, ser=ser)
-# play_notes_from_a_to_b(sleeptime=0.5, a=27, b=36, velocity=80, ser=ser)
-# play_notes_from_a_to_b(sleeptime=0.25, a=27, b=36, velocity=80, ser=ser)
+
+
+#############################
+########## AKKORDE ##########
+#############################
+# play_accord(note=21, velocity=80, ser=ser)
+# time.sleep(1)
+# play_accord(note=21, velocity=0, ser=ser)
+# play_accord(note=22, velocity=80, ser=ser)
+# time.sleep(1)
+# play_accord(note=22, velocity=0, ser=ser)
+# play_accord(note=23, velocity=80, ser=ser)
+# time.sleep(1)
+# play_accord(note=23, velocity=0, ser=ser)
+# play_accord(note=24, velocity=80, ser=ser)
+# time.sleep(1)
+# play_accord(note=24, velocity=0, ser=ser)
+# play_accord(note=25, velocity=80, ser=ser)
+# time.sleep(1)
+# play_accord(note=25, velocity=0, ser=ser)
+# play_accord(note=26, velocity=80, ser=ser)
+# time.sleep(1)
+# play_accord(note=26, velocity=0, ser=ser)
+
+#############################
+########## ARPEGGIOS ##########
+#############################
+# for i in range(10):
+#     play_notes_from_a_to_b(sleeptime=0.05, a=21, b=30, velocity=80, ser=ser)
+
+# for i in range(10):
+#     play_notes_from_b_to_a(sleeptime=0.05, a=21, b=30, velocity=80, ser=ser)
+
+# play_notes_increment_a_to_b(a=21, b=30, velocity=80, sleeptime=0.1, ser=ser)
+# play_notes_increment_b_to_a(b=30, a=21, velocity=80, sleeptime=0.1, ser=ser)
+
+
+
+# play_accord(note=22, velocity=80, sleeptime=0.1, ser=ser)
+# play_accord(note=23, velocity=80, sleeptime=0.1, ser=ser)
+# play_accord(note=24, velocity=80, sleeptime=0.1, ser=ser)
+# play_accord(note=25, velocity=80, sleeptime=0.1, ser=ser)
+# play_accord(note=26, velocity=80, sleeptime=0.1, ser=ser)
+
+# play_notes_from_b_to_a(sleeptime=0.088, a=21, b=29, velocity=80, ser=ser)
+# play_notes_from_a_to_b(sleeptime=0.088, a=22, b=30, velocity=80, ser=ser)
+# play_notes_from_b_to_a(sleeptime=0.088, a=21, b=29, velocity=80, ser=ser)
+# play_notes_from_a_to_b(sleeptime=0.088, a=22, b=30, velocity=80, ser=ser)
+# play_notes_from_a_to_b(sleeptime=0.088, a=21, b=30, velocity=80, ser=ser)
+# play_notes_from_b_to_a(sleeptime=0.088, a=21, b=29, velocity=80, ser=ser)
+# play_notes_from_a_to_b(sleeptime=0.088, a=22, b=30, velocity=80, ser=ser)
+# play_notes_from_b_to_a(sleeptime=0.088, a=21, b=29, velocity=80, ser=ser)
+# play_notes_from_a_to_b(sleeptime=0.088, a=22, b=30, velocity=80, ser=ser)
+# play_notes_from_a_to_b(sleeptime=0.088, a=21, b=30, velocity=80, ser=ser)
+# play_notes_from_b_to_a(sleeptime=0.088, a=21, b=29, velocity=80, ser=ser)
+# play_notes_from_a_to_b(sleeptime=0.088, a=22, b=30, velocity=80, ser=ser)
+# play_notes_from_b_to_a(sleeptime=0.088, a=21, b=29, velocity=80, ser=ser)
+# play_notes_from_a_to_b(sleeptime=0.088, a=22, b=30, velocity=80, ser=ser)
+
+
+
 # play_notes_from_a_to_b(sleeptime=1, a=27, b=36, velocity=80, ser=ser)
 # play_notes_from_b_to_a(sleeptime=1, a=27, b=36, velocity=80, ser=ser)
 # play_notes_from_a_to_b(sleeptime=0.125, a=27, b=36, velocity=80, ser=ser)

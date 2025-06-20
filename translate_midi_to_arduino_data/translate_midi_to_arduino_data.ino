@@ -74,7 +74,56 @@ void loop() {
 // methods (functions and procedures)
 byte returnPin(byte midiNoteValue) { // returns value between 0 and 15 (on one board are 16 pins numbered from 0 to 15)
   if (midiNoteValue >= 21 && midiNoteValue <= 36) {
-    return midiNoteValue - 21;
+    switch (midiNoteValue) {
+      case 21:
+        return midiNoteValue = 15;
+        break;
+      case 22:
+        return midiNoteValue = 14;
+        break;
+      case 23:
+        return midiNoteValue = 13;
+        break;
+      case 24:
+        return midiNoteValue = 12;
+        break;
+      case 25:
+        return midiNoteValue = 11;
+        break;
+      case 26:
+        return midiNoteValue = 10;
+        break;
+      case 27:
+        return midiNoteValue = 9;
+        break;
+      case 28:
+        return midiNoteValue = 8;
+        break;
+      case 29:
+        return midiNoteValue = 7;
+        break;
+      case 30:
+        return midiNoteValue = 6;
+        break;
+      case 31:
+        return midiNoteValue = 5;
+        break;
+      case 32:
+        return midiNoteValue = 4;
+        break;
+      case 33:
+        return midiNoteValue = 3;
+        break;
+      case 34:
+        return midiNoteValue = 2;
+        break;
+      case 35:
+        return midiNoteValue = 1;
+        break;
+      case 36:
+        return midiNoteValue = 0;
+        break;
+    }
   }
   if (midiNoteValue >= 37 && midiNoteValue <= 52) {
     return midiNoteValue - 37;
