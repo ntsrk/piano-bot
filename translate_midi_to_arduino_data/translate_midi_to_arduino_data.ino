@@ -74,72 +74,24 @@ void loop() {
 // methods (functions and procedures)
 byte returnPin(byte midiNoteValue) { // returns value between 0 and 15 (on one board are 16 pins numbered from 0 to 15)
   if (midiNoteValue >= 21 && midiNoteValue <= 36) {
-    switch (midiNoteValue) {
-      case 21:
-        return midiNoteValue = 15;
-        break;
-      case 22:
-        return midiNoteValue = 14;
-        break;
-      case 23:
-        return midiNoteValue = 13;
-        break;
-      case 24:
-        return midiNoteValue = 12;
-        break;
-      case 25:
-        return midiNoteValue = 11;
-        break;
-      case 26:
-        return midiNoteValue = 10;
-        break;
-      case 27:
-        return midiNoteValue = 9;
-        break;
-      case 28:
-        return midiNoteValue = 8;
-        break;
-      case 29:
-        return midiNoteValue = 7;
-        break;
-      case 30:
-        return midiNoteValue = 6;
-        break;
-      case 31:
-        return midiNoteValue = 5;
-        break;
-      case 32:
-        return midiNoteValue = 4;
-        break;
-      case 33:
-        return midiNoteValue = 3;
-        break;
-      case 34:
-        return midiNoteValue = 2;
-        break;
-      case 35:
-        return midiNoteValue = 1;
-        break;
-      case 36:
-        return midiNoteValue = 0;
-        break;
-    }
+    return 36 - midiNoteValue;
   }
   if (midiNoteValue >= 37 && midiNoteValue <= 52) {
-    return midiNoteValue - 37;
+    return 52 - midiNoteValue;  // Bereich: 15 → 0
   }
   if (midiNoteValue >= 53 && midiNoteValue <= 68) {
-    return midiNoteValue - 53;
+    return 68 - midiNoteValue;  // Bereich: 15 → 0
   }
   if (midiNoteValue >= 69 && midiNoteValue <= 84) {
-    return midiNoteValue - 69;
+    return 84 - midiNoteValue;  // Bereich: 15 → 0
   }
   if (midiNoteValue >= 85 && midiNoteValue <= 100) {
-    return midiNoteValue - 85;
+    return 100 - midiNoteValue; // Bereich: 15 → 0
   }
   if (midiNoteValue >= 101 && midiNoteValue <= 108) {
-    return midiNoteValue - 101;
+    return 108 - midiNoteValue; // Bereich: 7 → 0 (bei 8 Tasten)
   }
+  
 }
 
 byte calcDutyCycleValue(byte midiNoteVelocity) { // midiNoteVelocity between 0 and 127, dutyCycleValue between 0 and 100
