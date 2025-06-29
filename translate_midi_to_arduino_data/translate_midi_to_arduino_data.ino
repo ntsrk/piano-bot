@@ -15,7 +15,7 @@ Adafruit_PWMServoDriver pwmBoard5 = Adafruit_PWMServoDriver(0x45); // Key Number
 // C4 = 60
 
 // define constants and variables
-const byte INTERVAL_BETWEEN_NOTES = 25; // in ms (25ms works best at the moment)
+// const byte INTERVAL_BETWEEN_NOTES = 25; // in ms (25ms works best at the moment)
 const float DUTY_CYCLE_ACC = 40.96; // PWM Board Accuracy 12bit=2^12=4096
 byte dutyCycleValue; // store value from calcDutyCyclveValue(midiNoteVelocity)
 byte messageType;
@@ -23,7 +23,8 @@ byte midiNoteValue;
 byte midiNoteVelocity;
 
 void setup() {
-  Serial.begin(9600); // open serial port with reading/sending speed (bit per second)
+  Serial.begin(115200); // open serial port with reading/sending speed (bit per second)
+  // Serial.begin(9600); // open serial port with reading/sending speed (bit per second)
   // pwmBoard0.begin();
   // pwmBoard0.setPWMFreq(1600); // define frequency for all ports on the board
   // pwmBoard1.begin();
@@ -78,7 +79,7 @@ void loop() {
 
         // Jetzt verarbeiten
         if ((messageType & 0xF0) == 0x90 || (messageType & 0xF0) == 0x80) {
-          delay(INTERVAL_BETWEEN_NOTES);
+          // delay(INTERVAL_BETWEEN_NOTES);
           pwmBoard5.setPWM(
             returnPin(dataByte1),
             calcDutyCycleOnTime(calcDutyCycleValue(dataByte2)),

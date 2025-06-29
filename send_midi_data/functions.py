@@ -124,6 +124,20 @@ def play_accord(note, velocity, ser):
         ser.write(midi_msg.bytes())
         print(f"NOTE_ON {midi_msg.bytes()}")
 
+def play_white_key_chord(note, velocity, ser):
+    # Weiße Tasten sind 0,2,4,5,7,9,11 relative zu C in einer Oktave
+    # Wir spielen note, note + 2, note + 4 (jeweils nur weiße Tasten)
+    notes = [note, note + 2, note + 4]
+
+    for n in notes:
+        if 0 <= n <= 127:  # MIDI-Gültigkeitsbereich
+            midi_msg = mido.Message('note_on', channel=0, note=n, velocity=velocity)
+            ser.write(midi_msg.bytes())
+            print(f"NOTE_ON {midi_msg.bytes()}")
+        else:
+            print(f"Warnung: Note {n} außerhalb gültigem MIDI-Bereich")
+
+
 def play_note(sleeptime, note, velocity, ser):
     midi_msg_on = mido.Message('note_on', channel=0, note=note, velocity=velocity)
     midi_msg_off = mido.Message('note_on', channel=0, note=note, velocity=0)

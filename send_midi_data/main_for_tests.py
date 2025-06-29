@@ -7,7 +7,8 @@ from functions import *
 # Configure serial connection
 ser = serial.Serial(
     port='/dev/ttyACM0',
-    baudrate=9600,  # Arduino hat auch 9600 bit per second -> passt also zusammen
+    baudrate=115200,  # Arduino hat auch 9600 bit per second -> passt also zusammen
+    # baudrate=9600,  # Arduino hat auch 9600 bit per second -> passt also zusammen
     parity=serial.PARITY_NONE,
     stopbits=serial.STOPBITS_ONE,
     bytesize=serial.EIGHTBITS,
@@ -26,52 +27,91 @@ time.sleep(2) # benötigt etwas Zeit die Verbindung aufzubauen -> sonst verpasst
 ####################################
 # play_note(sleeptime=0.5, note=60, velocity=80, ser=ser)
 
-# play_repeating_note(repeat=10, sleeptime=0.25, note=60, velocity=80, ser=ser)
+play_repeating_note(repeat=30, sleeptime=0.088, note=60, velocity=80, ser=ser)
+play_repeating_note(repeat=30, sleeptime=0.088, note=62, velocity=80, ser=ser)
+play_repeating_note(repeat=30, sleeptime=0.088, note=64, velocity=80, ser=ser)
+play_repeating_note(repeat=30, sleeptime=0.088, note=65, velocity=80, ser=ser)
+play_repeating_note(repeat=30, sleeptime=0.088, note=67, velocity=80, ser=ser)
+play_repeating_note(repeat=30, sleeptime=0.088, note=69, velocity=80, ser=ser)
+play_repeating_note(repeat=30, sleeptime=0.088, note=71, velocity=80, ser=ser)
+play_repeating_note(repeat=30, sleeptime=0.088, note=72, velocity=80, ser=ser)
+play_repeating_note(repeat=30, sleeptime=0.088, note=74, velocity=80, ser=ser)
+play_repeating_note(repeat=30, sleeptime=0.088, note=76, velocity=80, ser=ser)
 
-# play_repeating_note_getting_faster(startsleeptime=1, stopsleeptime=0.05, change=0.05, note=60, velocity=80, ser=ser)
+# play_repeating_note_getting_faster(startsleeptime=1, stopsleeptime=0.02, change=0.02, note=60, velocity=80, ser=ser)
 # play_repeating_note_getting_slower(startsleeptime=0.05, stopsleeptime=1, change=0.05, note=60, velocity=80, ser=ser)
 
 
 #############################
 ########## AKKORDE ##########
 #############################
-# play_accord(note=60, velocity=80, ser=ser)
+# ser.write(mido.Message('note_on', channel=0, note=60, velocity=80).bytes())
+# ser.write(mido.Message('note_on', channel=0, note=64, velocity=80).bytes())
+# ser.write(mido.Message('note_on', channel=0, note=67, velocity=80).bytes())
 # time.sleep(1)
-# play_accord(note=60, velocity=0, ser=ser)
-# play_accord(note=62, velocity=80, ser=ser)
+# ser.write(mido.Message('note_on', channel=0, note=60, velocity=0).bytes())
+# ser.write(mido.Message('note_on', channel=0, note=64, velocity=0).bytes())
+# ser.write(mido.Message('note_on', channel=0, note=67, velocity=0).bytes())
 # time.sleep(1)
-# play_accord(note=62, velocity=0, ser=ser)
-# play_accord(note=64, velocity=80, ser=ser)
+# ser.write(mido.Message('note_on', channel=0, note=62, velocity=80).bytes())
+# ser.write(mido.Message('note_on', channel=0, note=65, velocity=80).bytes())
+# ser.write(mido.Message('note_on', channel=0, note=69, velocity=80).bytes())
 # time.sleep(1)
-# play_accord(note=64, velocity=0, ser=ser)
-# play_accord(note=65, velocity=80, ser=ser)
+# ser.write(mido.Message('note_on', channel=0, note=62, velocity=0).bytes())
+# ser.write(mido.Message('note_on', channel=0, note=65, velocity=0).bytes())
+# ser.write(mido.Message('note_on', channel=0, note=69, velocity=0).bytes())
 # time.sleep(1)
-# play_accord(note=65, velocity=0, ser=ser)
-# play_accord(note=67, velocity=80, ser=ser)
+# ser.write(mido.Message('note_on', channel=0, note=64, velocity=80).bytes())
+# ser.write(mido.Message('note_on', channel=0, note=67, velocity=80).bytes())
+# ser.write(mido.Message('note_on', channel=0, note=71, velocity=80).bytes())
 # time.sleep(1)
-# play_accord(note=67, velocity=0, ser=ser)
-# play_accord(note=69, velocity=80, ser=ser)
+# ser.write(mido.Message('note_on', channel=0, note=64, velocity=0).bytes())
+# ser.write(mido.Message('note_on', channel=0, note=67, velocity=0).bytes())
+# ser.write(mido.Message('note_on', channel=0, note=71, velocity=0).bytes())
 # time.sleep(1)
-# play_accord(note=69, velocity=0, ser=ser)
+# ser.write(mido.Message('note_on', channel=0, note=65, velocity=80).bytes())
+# ser.write(mido.Message('note_on', channel=0, note=69, velocity=80).bytes())
+# ser.write(mido.Message('note_on', channel=0, note=72, velocity=80).bytes())
+# time.sleep(1)
+# ser.write(mido.Message('note_on', channel=0, note=65, velocity=0).bytes())
+# ser.write(mido.Message('note_on', channel=0, note=69, velocity=0).bytes())
+# ser.write(mido.Message('note_on', channel=0, note=72, velocity=0).bytes())
+# time.sleep(1)
+# ser.write(mido.Message('note_on', channel=0, note=67, velocity=80).bytes())
+# ser.write(mido.Message('note_on', channel=0, note=71, velocity=80).bytes())
+# ser.write(mido.Message('note_on', channel=0, note=74, velocity=80).bytes())
+# time.sleep(1)
+# ser.write(mido.Message('note_on', channel=0, note=67, velocity=0).bytes())
+# ser.write(mido.Message('note_on', channel=0, note=71, velocity=0).bytes())
+# ser.write(mido.Message('note_on', channel=0, note=74, velocity=0).bytes())
+# time.sleep(1)
+# ser.write(mido.Message('note_on', channel=0, note=69, velocity=80).bytes())
+# ser.write(mido.Message('note_on', channel=0, note=72, velocity=80).bytes())
+# ser.write(mido.Message('note_on', channel=0, note=76, velocity=80).bytes())
+# time.sleep(1)
+# ser.write(mido.Message('note_on', channel=0, note=69, velocity=0).bytes())
+# ser.write(mido.Message('note_on', channel=0, note=72, velocity=0).bytes())
+# ser.write(mido.Message('note_on', channel=0, note=76, velocity=0).bytes())
+
 
 
 #############################
 ########## ARPEGGIOS ##########
-#############################
-# for i in range(10):
-#     play_white_keys(a=60, b=76, ser=ser, velocity=80, sleeptime=0.05)
+############################
+# for i in range(15):
+#     play_white_keys(a=60, b=76, ser=ser, velocity=80, sleeptime=0.025)
 
-# for i in range(10):
-#     play_white_keys_descending(b=76, a=60, ser=ser, velocity=80, sleeptime=0.05)
+# for i in range(15):
+#     play_white_keys_descending(b=76, a=60, ser=ser, velocity=80, sleeptime=0.025)
 
-# play_white_keys_incremental(a=60, b=76, ser=ser, velocity=80, sleeptime=0.05)
-# play_white_keys_incremental_desc(b=76, a=60, ser=ser, velocity=80, sleeptime=0.05)
+# play_white_keys_incremental(a=60, b=76, ser=ser, velocity=80, sleeptime=0.025)
+# play_white_keys_incremental_desc(b=76, a=60, ser=ser, velocity=80, sleeptime=0.025)
 
 
 ###########################
 ########## SONGS ##########
 ###########################
-midi_file = mido.MidiFile('/home/mdlxxiii/piano/piano_robot_project/piano_robot_project_software/send_midi_data/midi_files/twinkle-twinkle-little-star.mid')
+# midi_file = mido.MidiFile('/home/mdlxxiii/piano/piano_robot_project/piano_robot_project_software/send_midi_data/midi_files/twinkle-twinkle-little-star.mid')
 
 # midi_file = mido.MidiFile('/home/mdlxxiii/piano/piano_robot_project/piano_robot_project_software/send_midi_data/midi_files/bleach-here-to-stay.mid')
 
@@ -82,7 +122,7 @@ midi_file = mido.MidiFile('/home/mdlxxiii/piano/piano_robot_project/piano_robot_
 # midi_file = mido.MidiFile('piano_robot_project_software/send_midi_data/midi_files/Test_Klavier.mid')
 # midi_file = mido.MidiFile('send_midi_data/midi_files/Hungarian Rhapsody No. 2 - Franz Liszt [MIDICollection.net].mid')
 
-play_midi_file(midi_file, ser) # Open the MIDI file as static for tests
+# play_midi_file(midi_file, ser) # Open the MIDI file as static for tests
 
 # play_midi_file_one_channel(midi_file, 0, ser) # plays only notes on channel 0 (think thats left hand)
 
