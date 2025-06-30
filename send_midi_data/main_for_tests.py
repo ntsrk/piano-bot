@@ -27,16 +27,16 @@ time.sleep(2) # benötigt etwas Zeit die Verbindung aufzubauen -> sonst verpasst
 ####################################
 # play_note(sleeptime=0.5, note=60, velocity=80, ser=ser)
 
-play_repeating_note(repeat=30, sleeptime=0.088, note=60, velocity=80, ser=ser)
-play_repeating_note(repeat=30, sleeptime=0.088, note=62, velocity=80, ser=ser)
-play_repeating_note(repeat=30, sleeptime=0.088, note=64, velocity=80, ser=ser)
-play_repeating_note(repeat=30, sleeptime=0.088, note=65, velocity=80, ser=ser)
-play_repeating_note(repeat=30, sleeptime=0.088, note=67, velocity=80, ser=ser)
-play_repeating_note(repeat=30, sleeptime=0.088, note=69, velocity=80, ser=ser)
-play_repeating_note(repeat=30, sleeptime=0.088, note=71, velocity=80, ser=ser)
-play_repeating_note(repeat=30, sleeptime=0.088, note=72, velocity=80, ser=ser)
-play_repeating_note(repeat=30, sleeptime=0.088, note=74, velocity=80, ser=ser)
-play_repeating_note(repeat=30, sleeptime=0.088, note=76, velocity=80, ser=ser)
+# play_repeating_note(repeat=30, sleeptime=0.088, note=60, velocity=80, ser=ser)
+# play_repeating_note(repeat=30, sleeptime=0.088, note=62, velocity=80, ser=ser)
+# play_repeating_note(repeat=30, sleeptime=0.088, note=64, velocity=80, ser=ser)
+# play_repeating_note(repeat=30, sleeptime=0.088, note=65, velocity=80, ser=ser)
+# play_repeating_note(repeat=30, sleeptime=0.088, note=67, velocity=80, ser=ser)
+# play_repeating_note(repeat=30, sleeptime=0.088, note=69, velocity=80, ser=ser)
+# play_repeating_note(repeat=30, sleeptime=0.088, note=71, velocity=80, ser=ser)
+# play_repeating_note(repeat=30, sleeptime=0.088, note=72, velocity=80, ser=ser)
+# play_repeating_note(repeat=30, sleeptime=0.088, note=74, velocity=80, ser=ser)
+# play_repeating_note(repeat=30, sleeptime=0.088, note=76, velocity=80, ser=ser)
 
 # play_repeating_note_getting_faster(startsleeptime=1, stopsleeptime=0.02, change=0.02, note=60, velocity=80, ser=ser)
 # play_repeating_note_getting_slower(startsleeptime=0.05, stopsleeptime=1, change=0.05, note=60, velocity=80, ser=ser)
@@ -98,8 +98,8 @@ play_repeating_note(repeat=30, sleeptime=0.088, note=76, velocity=80, ser=ser)
 #############################
 ########## ARPEGGIOS ##########
 ############################
-# for i in range(15):
-#     play_white_keys(a=60, b=76, ser=ser, velocity=80, sleeptime=0.025)
+for i in range(1):
+    play_white_keys(a=36, b=84, ser=ser, velocity=80, sleeptime=0.2)
 
 # for i in range(15):
 #     play_white_keys_descending(b=76, a=60, ser=ser, velocity=80, sleeptime=0.025)
