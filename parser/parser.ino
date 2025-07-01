@@ -1,29 +1,72 @@
 #include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>
 
+Adafruit_PWMServoDriver pwmBoard0 = Adafruit_PWMServoDriver(0x40);
+Adafruit_PWMServoDriver pwmBoard1 = Adafruit_PWMServoDriver(0x41);
+Adafruit_PWMServoDriver pwmBoard2 = Adafruit_PWMServoDriver(0x42);
+Adafruit_PWMServoDriver pwmBoard3 = Adafruit_PWMServoDriver(0x43);
+Adafruit_PWMServoDriver pwmBoard4 = Adafruit_PWMServoDriver(0x44);
 Adafruit_PWMServoDriver pwmBoard5 = Adafruit_PWMServoDriver(0x45);
 
-const float DUTY_CYCLE_ACC = 40.96; // Umrechnung für PCA9685 (12 Bit = 4096 Schritte)
-const byte HOLD_DUTY = 50;          // DutyCycle nach Kick-Phase
-const byte MIN_NOTE_DELAY = 40;     // Minimaler Abstand in ms zwischen zwei gleichen Anschlägen (ansonsten hat die Taste nicht genug Zeit wieder nach oben zu kommen um erneut gespielt zu werden und ist dann einfach stumm)
+const float DUTY_CYCLE_ACC = 40.96;
+const unsigned long MIN_TIME_BETWEEN_NOTES = 50; // ms
 
-struct NoteState {
-  bool active = false;
-  unsigned long kickStart = 0;
-  unsigned long lastReleased = 0;
-  byte pin = 0xFF;
-  byte dutyCycleKick = 0;
+struct PinBoard {
+  Adafruit_PWMServoDriver* board;
+  byte pin;
 };
 
-NoteState noteStates[128]; // Zustände für alle MIDI-Noten
+struct ScheduledNote {
+  byte note;
+  byte velocity;
+  unsigned long playTime; // Zeitpunkt, wann Note gespielt werden soll
+};
+
+const int MAX_SCHEDULED_NOTES = 16;
+ScheduledNote scheduledNotes[MAX_SCHEDULED_NOTES];
+int scheduledCount = 0;
+
+// nächstmöglicher Zeitpunkt für jede Note
+unsigned long nextAvailableTime[109];
 
 void setup() {
   Serial.begin(115200);
-  pwmBoard5.begin();
-  pwmBoard5.setPWMFreq(1600);
+  pwmBoard0.begin(); pwmBoard0.setPWMFreq(1600);
+  pwmBoard1.begin(); pwmBoard1.setPWMFreq(1600);
+  pwmBoard2.begin(); pwmBoard2.setPWMFreq(1600);
+  pwmBoard3.begin(); pwmBoard3.setPWMFreq(1600);
+  pwmBoard4.begin(); pwmBoard4.setPWMFreq(1600);
+  pwmBoard5.begin(); pwmBoard5.setPWMFreq(1600);
+
+  for (int i = 0; i < 109; i++) {
+    nextAvailableTime[i] = 0;
+  }
+  for (int i = 0; i < MAX_SCHEDULED_NOTES; i++) {
+    scheduledNotes[i].playTime = 0;
+  }
 }
 
 void loop() {
+  processSerialMidi();
+
+  // Prüfe, ob geplante Noten jetzt gespielt werden können
+  unsigned long currentTime = millis();
+  for (int i = 0; i < scheduledCount; ) {
+    if (scheduledNotes[i].playTime <= currentTime) {
+      playNoteNow(scheduledNotes[i].note, scheduledNotes[i].velocity);
+
+      // Note aus Queue löschen, indem alle nachfolgenden eine Position nach vorne rücken
+      for (int j = i; j < scheduledCount - 1; j++) {
+        scheduledNotes[j] = scheduledNotes[j + 1];
+      }
+      scheduledCount--;
+    } else {
+      i++;
+    }
+  }
+}
+
+void processSerialMidi() {
   static byte messageType = 0;
   static byte dataByte1 = 0;
   static byte dataByte2 = 0;
@@ -33,7 +76,7 @@ void loop() {
   while (Serial.available()) {
     byte incomingByte = Serial.read();
 
-    if (incomingByte & 0x80) {  // Statusbyte
+    if (incomingByte & 0x80) {
       messageType = incomingByte;
       byte type = messageType & 0xF0;
       expectedDataBytes = (type == 0xC0 || type == 0xD0) ? 1 : 2;
@@ -42,78 +85,64 @@ void loop() {
       if (state == 0) {
         dataByte1 = incomingByte;
         state = 1;
+        if (expectedDataBytes == 1) return;
       } else if (state == 1) {
         dataByte2 = incomingByte;
         state = 0;
 
-        byte pin = returnPin(dataByte1);
-        if (pin == 0xFF) continue; // ungültige Note ignorieren
+        if ((messageType & 0xF0) == 0x90 || (messageType & 0xF0) == 0x80) {
+          byte velocity = dataByte2;
+          byte note = dataByte1;
 
-        unsigned long now = millis();
-
-        if ((messageType & 0xF0) == 0x90 && dataByte2 > 0) {
-          // NOTE ON
-          unsigned long timeSinceRelease = now - noteStates[dataByte1].lastReleased;
-          if (timeSinceRelease < MIN_NOTE_DELAY) {
-            delay(MIN_NOTE_DELAY - timeSinceRelease); // Warten bis Taste bereit ist
-          }
-
-          byte kickDuty = calcDutyCycleValue(dataByte2);
-          pwmBoard5.setPWM(pin, calcDutyCycleOnTime(kickDuty), calcDutyCycleOffTime(kickDuty));
-
-          noteStates[dataByte1].active = true;
-          noteStates[dataByte1].kickStart = millis();
-          noteStates[dataByte1].pin = pin;
-          noteStates[dataByte1].dutyCycleKick = kickDuty;
-
-        } else if ((messageType & 0xF0) == 0x80 || dataByte2 == 0) {
-          // NOTE OFF
-          pwmBoard5.setPWM(pin, 0, 4096); // PWM auf 0 setzen
-          noteStates[dataByte1].active = false;
-          noteStates[dataByte1].lastReleased = now;
+          scheduleNoteWithDelay(note, velocity);
         }
       }
     }
   }
+}
 
-  // Nach 50 ms DutyCycle auf HOLD_DUTY reduzieren
-  for (int i = 0; i < 128; i++) {
-    if (noteStates[i].active && (millis() - noteStates[i].kickStart > 50)) {
-      pwmBoard5.setPWM(
-        noteStates[i].pin,
-        calcDutyCycleOnTime(HOLD_DUTY),
-        calcDutyCycleOffTime(HOLD_DUTY)
-      );
-      noteStates[i].active = false; // nur einmal reduzieren
-    }
+void scheduleNoteWithDelay(byte note, byte velocity) {
+  if (note >= 109) return; // ungültige Note ignorieren
+
+  unsigned long currentTime = millis();
+  unsigned long playTime = max(currentTime, nextAvailableTime[note]);
+  nextAvailableTime[note] = playTime + MIN_TIME_BETWEEN_NOTES;
+
+  if (scheduledCount < MAX_SCHEDULED_NOTES) {
+    scheduledNotes[scheduledCount++] = {note, velocity, playTime};
+  } else {
+    // Queue voll, einfach sofort spielen als Fallback
+    playNoteNow(note, velocity);
   }
 }
 
-// Nur weiße Tasten definieren (weil nur 10 weiße Tasten aktuell angeschlossen sind)
-byte returnPin(byte midiNoteValue) {
-  switch (midiNoteValue) {
-    case 60: return 15; // C4
-    case 62: return 14; // D4
-    case 64: return 13; // E4
-    case 65: return 12; // F4
-    case 67: return 11; // G4
-    case 69: return 10; // A4
-    case 71: return 9;  // B4
-    case 72: return 8;  // C5
-    case 74: return 7;  // D5
-    case 76: return 6;  // E5
-    default: return 0xFF;
+void playNoteNow(byte note, byte velocity) {
+  PinBoard pb = getPinAndBoard(note);
+  if (pb.board != nullptr && pb.pin < 16) {
+    int onTime = calcDutyCycleOnTime(calcDutyCycleValue(velocity));
+    int offTime = calcDutyCycleOffTime(calcDutyCycleValue(velocity));
+    pb.board->setPWM(pb.pin, onTime, offTime);
   }
+}
+
+PinBoard getPinAndBoard(byte note) {
+  if (note >= 21 && note <= 36) return { &pwmBoard5, 36 - note };
+  if (note >= 37 && note <= 52) return { &pwmBoard4, 52 - note };
+  if (note >= 53 && note <= 68) return { &pwmBoard3, 68 - note };
+  if (note >= 69 && note <= 84) return { &pwmBoard2, 84 - note };
+  if (note >= 85 && note <= 100) return { &pwmBoard1, 100 - note };
+  if (note >= 101 && note <= 108) return { &pwmBoard0, 108 - note };
+  return { nullptr, 0xFF };
 }
 
 byte calcDutyCycleValue(byte midiNoteVelocity) {
   if (midiNoteVelocity == 0) return 0;
-  if (midiNoteVelocity < 16) midiNoteVelocity = 16;
-  return 70 + ((midiNoteVelocity - 16) * 30 / 110); // 70–100 %
+  return 70 + (midiNoteVelocity - 16) * (30.0 / 110);
 }
 
 int calcDutyCycleOnTime(byte dutyCycleValue) {
-  return (dutyCycleValue == 100) ? 4096 : 0;
+  if (dutyCycleValue == 100) return 4096;
+  return 0;
 }
 
 int calcDutyCycleOffTime(byte dutyCycleValue) {

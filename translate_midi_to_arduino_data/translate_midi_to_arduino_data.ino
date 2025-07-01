@@ -1,25 +1,29 @@
-// load libraries
 #include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>
 
-// define PCA9685 boards with their I2C addresses
-Adafruit_PWMServoDriver pwmBoards[6] = {
-  Adafruit_PWMServoDriver(0x40), // Board 0: Key 81-88
-  Adafruit_PWMServoDriver(0x41), // Board 1: Key 65-80
-  Adafruit_PWMServoDriver(0x42), // Board 2: Key 49-64
-  Adafruit_PWMServoDriver(0x43), // Board 3: Key 33-48
-  Adafruit_PWMServoDriver(0x44), // Board 4: Key 17-32
-  Adafruit_PWMServoDriver(0x45)  // Board 5: Key 1-16
-};
+// Initialisiere alle PWM-Boards mit ihren Adressen
+Adafruit_PWMServoDriver pwmBoard0 = Adafruit_PWMServoDriver(0x40);
+Adafruit_PWMServoDriver pwmBoard1 = Adafruit_PWMServoDriver(0x41);
+Adafruit_PWMServoDriver pwmBoard2 = Adafruit_PWMServoDriver(0x42);
+Adafruit_PWMServoDriver pwmBoard3 = Adafruit_PWMServoDriver(0x43);
+Adafruit_PWMServoDriver pwmBoard4 = Adafruit_PWMServoDriver(0x44);
+Adafruit_PWMServoDriver pwmBoard5 = Adafruit_PWMServoDriver(0x45);
 
-const float DUTY_CYCLE_ACC = 40.96; // 4096 / 100
+const float DUTY_CYCLE_ACC = 40.96;
+
+struct PinBoard {
+  Adafruit_PWMServoDriver* board;
+  byte pin;
+};
 
 void setup() {
   Serial.begin(115200);
-  for (int i = 0; i < 6; i++) {
-    pwmBoards[i].begin();
-    pwmBoards[i].setPWMFreq(1600);
-  }
+  pwmBoard0.begin(); pwmBoard0.setPWMFreq(1600);
+  pwmBoard1.begin(); pwmBoard1.setPWMFreq(1600);
+  pwmBoard2.begin(); pwmBoard2.setPWMFreq(1600);
+  pwmBoard3.begin(); pwmBoard3.setPWMFreq(1600);
+  pwmBoard4.begin(); pwmBoard4.setPWMFreq(1600);
+  pwmBoard5.begin(); pwmBoard5.setPWMFreq(1600);
 }
 
 void loop() {
@@ -41,23 +45,20 @@ void loop() {
       if (state == 0) {
         dataByte1 = incomingByte;
         state = 1;
-        if (expectedDataBytes == 1) {
-          // optional
-        }
+        if (expectedDataBytes == 1) return;
       } else if (state == 1) {
         dataByte2 = incomingByte;
         state = 0;
 
         if ((messageType & 0xF0) == 0x90 || (messageType & 0xF0) == 0x80) {
-          byte pin = returnPin(dataByte1);
-          int boardIndex = returnBoardIndex(dataByte1);
+          byte velocity = dataByte2;
+          byte note = dataByte1;
 
-          if (boardIndex >= 0 && boardIndex < 6) {
-            pwmBoards[boardIndex].setPWM(
-              pin,
-              calcDutyCycleOnTime(calcDutyCycleValue(dataByte2)),
-              calcDutyCycleOffTime(calcDutyCycleValue(dataByte2))
-            );
+          PinBoard pb = getPinAndBoard(note);
+          if (pb.board != nullptr && pb.pin < 16) {
+            int onTime = calcDutyCycleOnTime(calcDutyCycleValue(velocity));
+            int offTime = calcDutyCycleOffTime(calcDutyCycleValue(velocity));
+            pb.board->setPWM(pb.pin, onTime, offTime);
           }
         }
       }
@@ -65,27 +66,25 @@ void loop() {
   }
 }
 
-byte returnBoardIndex(byte midiNoteValue) {
-  if (midiNoteValue >= 101 && midiNoteValue <= 108) return 0;
-  if (midiNoteValue >= 85 && midiNoteValue <= 100) return 1;
-  if (midiNoteValue >= 69 && midiNoteValue <= 84)  return 2;
-  if (midiNoteValue >= 53 && midiNoteValue <= 68)  return 3;
-  if (midiNoteValue >= 37 && midiNoteValue <= 52)  return 4;
-  if (midiNoteValue >= 21 && midiNoteValue <= 36)  return 5;
-  return -1; // invalid note
-}
-
-byte returnPin(byte midiNoteValue) {
-  return (midiNoteValue - 21) % 16; // note-to-pin mapping per board
+// Kombinierte Funktion für Board + Pin
+PinBoard getPinAndBoard(byte note) {
+  if (note >= 21 && note <= 36) return { &pwmBoard5, 36 - note };
+  if (note >= 37 && note <= 52) return { &pwmBoard4, 52 - note };
+  if (note >= 53 && note <= 68) return { &pwmBoard3, 68 - note };
+  if (note >= 69 && note <= 84) return { &pwmBoard2, 84 - note };
+  if (note >= 85 && note <= 100) return { &pwmBoard1, 100 - note };
+  if (note >= 101 && note <= 108) return { &pwmBoard0, 108 - note };
+  return { nullptr, 0xFF }; // ungültig
 }
 
 byte calcDutyCycleValue(byte midiNoteVelocity) {
   if (midiNoteVelocity == 0) return 0;
-  return 70 + (midiNoteVelocity - 16) * (30 / 110.0);
+  return 70 + (midiNoteVelocity - 16) * (30.0 / 110);  // Skaliert 16–127 auf ca. 70–100
 }
 
 int calcDutyCycleOnTime(byte dutyCycleValue) {
-  return (dutyCycleValue == 100) ? 4096 : 0;
+  if (dutyCycleValue == 100) return 4096;
+  return 0;
 }
 
 int calcDutyCycleOffTime(byte dutyCycleValue) {

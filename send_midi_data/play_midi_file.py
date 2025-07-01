@@ -7,7 +7,7 @@ from functions import *
 # Configure serial connection
 ser = serial.Serial(
     port='/dev/ttyACM0',
-    baudrate=9600,  # Arduino hat auch 9600 bit per second -> passt also zusammen
+    baudrate=115200,  # Arduino hat auch 9600 bit per second -> passt also zusammen
     parity=serial.PARITY_NONE,
     stopbits=serial.STOPBITS_ONE,
     bytesize=serial.EIGHTBITS,
