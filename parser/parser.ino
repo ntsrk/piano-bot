@@ -137,7 +137,7 @@ PinBoard getPinAndBoard(byte note) {
 
 byte calcDutyCycleValue(byte midiNoteVelocity) {
   if (midiNoteVelocity == 0) return 0;
-  return 70 + (midiNoteVelocity - 16) * (30.0 / 110);
+  return 50 + (midiNoteVelocity - 16) * (30.0 / 110);
 }
 
 int calcDutyCycleOnTime(byte dutyCycleValue) {
