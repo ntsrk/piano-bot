@@ -80,29 +80,35 @@ def play_white_keys_incremental(a, b, ser, velocity=80, sleeptime=0.2):
             print("OFF:", midi_msg_off.bytes())
             time.sleep(sleeptime)
 
-def play_white_keys(a, b, ser, velocity=80, sleeptime=0.2):
+def play_white_keys(a, b, ser, velocity=80, sleeptime=0.2, repeat=1):
     for note in range(a, b + 1):
         if is_white_key(note):
-            midi_msg_on = mido.Message('note_on', channel=0, note=note, velocity=velocity)
-            ser.write(midi_msg_on.bytes())
-            print("ON:", midi_msg_on.bytes())
-            time.sleep(sleeptime)
-            midi_msg_off = mido.Message('note_on', channel=0, note=note, velocity=0)
-            ser.write(midi_msg_off.bytes())
-            print("OFF:", midi_msg_off.bytes())
-            time.sleep(sleeptime)
+            for _ in range(repeat):  # Anzahl Wiederholungen
+                midi_msg_on = mido.Message('note_on', channel=0, note=note, velocity=velocity)
+                ser.write(midi_msg_on.bytes())
+                print("ON:", midi_msg_on.bytes())
+                time.sleep(sleeptime)
+                
+                midi_msg_off = mido.Message('note_on', channel=0, note=note, velocity=0)
+                ser.write(midi_msg_off.bytes())
+                print("OFF:", midi_msg_off.bytes())
+                time.sleep(sleeptime)
 
-def play_white_keys_descending(b, a, ser, velocity=80, sleeptime=0.2):
+
+def play_white_keys_descending(b, a, ser, velocity=80, sleeptime=0.2, repeat=1):
     for note in range(b, a - 1, -1):
         if is_white_key(note):
-            midi_msg_on = mido.Message('note_on', channel=0, note=note, velocity=velocity)
-            ser.write(midi_msg_on.bytes())
-            print("ON:", midi_msg_on.bytes())
-            time.sleep(sleeptime)
-            midi_msg_off = mido.Message('note_on', channel=0, note=note, velocity=0)
-            ser.write(midi_msg_off.bytes())
-            print("OFF:", midi_msg_off.bytes())
-            time.sleep(sleeptime)
+            for _ in range(repeat):  # Anzahl Wiederholungen pro Taste
+                midi_msg_on = mido.Message('note_on', channel=0, note=note, velocity=velocity)
+                ser.write(midi_msg_on.bytes())
+                print("ON:", midi_msg_on.bytes())
+                time.sleep(sleeptime)
+
+                midi_msg_off = mido.Message('note_on', channel=0, note=note, velocity=0)
+                ser.write(midi_msg_off.bytes())
+                print("OFF:", midi_msg_off.bytes())
+                time.sleep(sleeptime)
+
 
 def play_notes_increment_b_to_a(b, a, velocity, sleeptime, ser):
     for end_note in range(b, a - 1, -1):  # rückwärts von b bis a (inklusive)
