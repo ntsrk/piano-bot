@@ -95,22 +95,22 @@ time.sleep(2) # benötigt etwas Zeit die Verbindung aufzubauen -> sonst verpasst
 
 ################### Velocity testen
 # for i in range(5):
-# play_white_keys(a=36, b=84, ser=ser, velocity=30, sleeptime=0.025)
-# play_white_keys(a=36, b=84, ser=ser, velocity=50, sleeptime=0.025)
-# play_white_keys(a=36, b=84, ser=ser, velocity=70, sleeptime=0.025)
-# play_white_keys(a=36, b=84, ser=ser, velocity=90, sleeptime=0.025)
-# play_white_keys(a=36, b=84, ser=ser, velocity=110, sleeptime=0.025)
-# play_white_keys(a=36, b=84, ser=ser, velocity=127, sleeptime=0.025)
+#     play_white_keys(a=36, b=84, ser=ser, velocity=30, sleeptime=0.025)
+#     play_white_keys(a=36, b=84, ser=ser, velocity=50, sleeptime=0.025)
+#     play_white_keys(a=36, b=84, ser=ser, velocity=70, sleeptime=0.025)
+#     play_white_keys(a=36, b=84, ser=ser, velocity=90, sleeptime=0.025)
+#     play_white_keys(a=36, b=84, ser=ser, velocity=110, sleeptime=0.025)
+#     play_white_keys(a=36, b=84, ser=ser, velocity=127, sleeptime=0.025)
 
 
 #############################
 ########## ARPEGGIOS ##########
 ############################
-# for i in range(5):
-#     play_white_keys(a=36, b=84, ser=ser, velocity=80, sleeptime=0.025)
+# for i in range(3):
+#     play_white_keys(a=36, b=84, ser=ser, velocity=80, sleeptime=0.1)
 
-# for i in range(5):
-#     play_white_keys_descending(b=84, a=36, ser=ser, velocity=80, sleeptime=0.025)
+for i in range(5):
+    play_white_keys_descending(b=84, a=36, ser=ser, velocity=80, sleeptime=0.1)
 
 # play_white_keys_incremental(a=36, b=84, ser=ser, velocity=80, sleeptime=0.025)
 # play_white_keys_incremental_desc(b=84, a=36, ser=ser, velocity=80, sleeptime=0.025)
