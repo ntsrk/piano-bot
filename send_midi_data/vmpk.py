@@ -17,22 +17,12 @@ ser = serial.Serial(
 time.sleep(2)  # kurze Pause, damit Arduino bereit ist
 
 # =========================
-# MIDI Setup
-# =========================
-print("Verfügbare MIDI-Eingänge:")
-for name in mido.get_input_names():
-    print(f"  {name}")
-
-midi_port_name = "VirMIDI 3-0"
-
-print(f"\nÖffne MIDI-Eingang: {midi_port_name}")
-
-# =========================
 # Hauptloop
 # =========================
 try:
-    with mido.open_input(midi_port_name) as inport:
+    with mido.open_input() as inport:
         print("Empfange MIDI-Nachrichten... (Ctrl+C zum Beenden)")
+        print("VMPK Output muss RtMidi In oder Midi Through sein um zu funktionieren!")
         for msg in inport:
             print(msg)
             if msg.type in ['note_on', 'note_off']:
