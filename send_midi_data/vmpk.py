@@ -26,7 +26,6 @@ try:
         for msg in inport:
             print(msg)
             if msg.type in ['note_on', 'note_off']:
-                # print(msg)  # Debug-Ausgabe
 
                 # MIDI-Botschaft in Bytes umwandeln
                 data = msg.bytes()
