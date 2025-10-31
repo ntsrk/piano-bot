@@ -14,16 +14,10 @@ MIDI File → Python (USB) → Arduino Uno → Parser → PCA9685 Boards → Sol
 ## Demo Videos
 
 ### Pieczonka - Tarantella
-<video width="100%" controls>
-  <source src="demo/Pieczonka-Tarantella.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+[![Click to play](demo/thumbnail_tarantella.jpg)](demo/Pieczonka-Tarantella.mp4)
 
-### Stardew Valley - The Stardrop Saloon
-<video width="100%" controls>
-  <source src="demo/Stardew_Valley-The_Stardrop_Saloon.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+### Stardew Valley
+[![Click to play](demo/thumbnail_stardew.jpg)](demo/Stardew_Valley-The_Stardrop_Saloon.mp4)
 
 ---
 
