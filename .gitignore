@@ -5,7 +5,7 @@
 /send_midi_data/documentation.txt
 
 # Tests
-/send_midi_data/main_for_tests.py
+/send_midi_data/tests.py
 /send_midi_data/tutorial_mido.py
 
 # Backup/Temp
