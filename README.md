@@ -3,8 +3,8 @@
 **A solenoid-powered piano-playing robot prototype** controlled by an **Arduino Uno**.  
 **Python** sends MIDI data via **USB** to the Arduino, where a **C++ parser** translates note events into **PWM signals** on the correct pins — using **daisy-chained PCA9685 boards** for scalable output.
 
-![Piano Bot Demo 1](demos/Pieczonka-Tarantella.mp4)
-![Piano Bot Demo 2](demos/Stardew_Valley-The_Stardrop_Saloon.mp4)
+![Piano Bot Demo 1](demo/Pieczonka-Tarantella.mp4)
+![Piano Bot Demo 2](demo/Stardew_Valley-The_Stardrop_Saloon.mp4)
 
 *Click the videos above to watch the robot play in real time!*
 
