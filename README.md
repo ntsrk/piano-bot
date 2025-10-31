@@ -8,14 +8,12 @@
 
 <video width="640" height="480" controls>
   <source src="demo/Pieczonka-Tarantella.mp4" type="video/mp4">
-  Dein Browser unterstützt das Video nicht.
 </video>
 
 ### Demo 2
 
 <video width="640" height="480" controls>
   <source src="demo/Stardew_Valley-The_Stardrop_Saloon.mp4" type="video/mp4">
-  Dein Browser unterstützt das Video nicht.
 </video>
 
 
