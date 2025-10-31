@@ -16,7 +16,7 @@ MIDI File → Python (USB) → Arduino Uno → Parser → PCA9685 Boards → Sol
 ### Pieczonka - Tarantella
 [![Click to play](https://img.youtube.com/vi/WzyHDf8fpjk/0.jpg)](https://youtu.be/WzyHDf8fpjk)
 
-### Stardew Valley
+### Stardew Valley - The Stardrop Saloon
 [![Click to play](https://img.youtube.com/vi/L0EXUqQhjpY/0.jpg)](https://youtu.be/L0EXUqQhjpY)
 
 ---
