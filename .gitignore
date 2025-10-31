@@ -1,11 +1,14 @@
-# Only keep source code
-/alt
+# Cache
 /send_midi_data/__pycache__
-/send_midi_data/midi_files
+
+# Docs
 /send_midi_data/documentation.txt
+
+# Tests
+/send_midi_data/main_for_tests.py
 /send_midi_data/tutorial_mido.py
 
-# Don't keep backup files
+# Backup/Temp
 *.swp
 *.un~
-.*~
+*~

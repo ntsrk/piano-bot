@@ -2,7 +2,7 @@ import mido
 import time
 import serial
 import sys
-from functions import play_midi_file  # Angenommen, dies ist deine Funktion
+from functions import play_midi_file
 
 def send_all_notes_off(ser):
     """
